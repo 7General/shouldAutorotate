@@ -9,7 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
-
+{
+    
+    BOOL _isFull; // 是否全屏
+    
+}
+@property (nonatomic)BOOL isFull;
 @property (strong, nonatomic) UIWindow *window;
 
 
