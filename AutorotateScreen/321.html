@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>2222222222</title>
+	<meta name="viewport" content="width=device-width,initial-scale=0.5,maximum-scale=2.0">
+	<link rel="stylesheet" href="/ItaxerGS/css/base.css">
+	<script type="text/javascript" src="/ItaxerGS/js/jquery-1.10.1.min.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="http://qzonestyle.gtimg.cn/qzone/qzact/common/share/share.js"></script>
+	<script type="text/javascript" src="/ItaxerGS/js/global.js"></script>
+	<style type="text/css">
+	.y_header00{ position:relative;}
+	.y_aaaa{position: absolute; z-index: 1000; left: 41%; top: 37.5%;}
+	.audiojs{
+		position: relative;
+		padding-right: .5rem;
+		width: 18rem;
+		height: 4.5rem;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		background-color: #e8e8e8;
+		margin: 1rem 0;
+		border-radius: 0 4.5rem 4.5rem 0;
+		background-image: url('/ItaxerGS/images/audio/audio.png');
+		background-repeat: no-repeat;
+		background-size: 3.4rem 3.4rem;
+		background-position: right center;
+		-moz-background-image: url('/ItaxerGS/images/audio/audio.png');
+		-webkit-background-image: url('/ItaxerGS/images/audio/audio.png');
+		-ms-background-image: url('/ItaxerGS/images/audio/audio.png');
+		-webkit-background-size: 3.4rem 3.4rem;
+		-moz-background-size: 3.4rem 3.4rem;
+		-o-background-size: 3.4rem 3.4rem;
+		background-origin: content-box;
+		-webkit-background-origin: content-box;
+		-moz-background-origin: initial;
+	}
+
+	.audiojs .time{
+		line-height: 4.5rem;
+		padding: 0 4rem 0 1.8rem;
+		text-align: center;
+		font-size: 1.4rem;
+	}
+
+	.audiojs .play-pause{
+		position: absolute;
+		right: .55rem;
+		top: .55rem;
+		width: 3.4rem;
+		height: 3.4rem;
+	}
+</style>
+	
+	</style>
+	<script type="text/javascript">
+		$(function(){
+			if(location.href.indexOf("share=true")>= 0){
+				$(".y_img01").css("display","none");
+				$(".y_img02").css("display","none");
+				$("#video").css("display","block");
+			}
+			var content=$("#content").html();
+			$("#content").eq(0).html(content.replace(new RegExp('<br style="margin: 0px; padding: 0px;">',"gm"), "<span style='display:block;height:1rem;'></span>","g"));
+
+			var article_id=canleDH('28,039'); 
+	         $.ajax(  
+			    {  
+			        type:'get',  
+			        url : '/ItaxerGS/appi/get_read_count?type=1&article_id='+article_id+"&date="+$.now(),
+			        dataType : 'json',   
+			        success  : function(data) {
+			        	if(data.read_count=='undefined'){
+			        		 $('#read').html("阅读 999+");
+			        	}else{
+			        		$('#read').html("阅读 "+data.read_count);
+			        	}  
+			        },  
+			        error : function() {  
+			           	 $('#read').html("阅读 999+");
+			        }  
+			    }  
+			); 
+			 $(".y_img01").css("marginTop" , "30px");
+			 var aaa=$(window).height();
+			 $(".y_img01").css("height", aaa/3);
+			 $(".y_header01").addClass("y_header00");
+			 $(".y_img02").addClass("y_aaaa");
+			 
+			 
+			   function canleDH(objValue){
+             		return objValue.replace(new RegExp(",","gm"),"");
+    			}
+
+		})
+	</script>
+</head>
+<body>
+
+
+					  <video id="myVideo" width="100%" height="400px"  poster="/ItaxerGS/ENTYPATH/files/enty/EF20161027593234742515.jpg" src="https://app.chinatax.gov.cn/ItaxerGS//ENTYPATH/files/enty/EF20161027593353913508.mp4" controls autobuffer ></video>
+			 	  
+	<script>
+	if(document.getElementById("myAudio")){
+        document.getElementById("myAudio").load();
+	}
+
+	window.onscroll = function(){
+		if(document.body.scrollTop == 0){
+			$("#backToTop").css("display","none");
+		}else{
+			$("#backToTop").css("display","");
+		}
+	}
+
+	$(".play-pause").on("click",function(){
+		var audio = document.getElementById("myAudio");
+		var audiojs = document.getElementsByClassName(".audiojs")[0];
+		var paused = audio.paused;
+		if(paused){
+			audio.play();
+		}else if(!paused){
+			audio.pause();
+		}
+	});
+
+	var interval;
+	function obsTime (){
+		var time;
+		interval = setInterval(function(){
+			time = parseInt(document.getElementById("myAudio").played.end(0));
+			$(".audiojs .played").text(formatTime(time));
+		},1000);
+	}
+
+	document.getElementById("myAudio").onloadedmetadata = function(){
+    		$(".audiojs .total").text(formatTime(parseInt(this.duration)));
+    		$(".audiojs .played").text("00:00").css("display","none");
+    		$(".audiojs .dec").css("display","none");
+	};
+
+	document.getElementById("myAudio").ondurationchange = function(){
+        	$(".audiojs .total").text(formatTime(parseInt(this.duration)));
+    };
+
+	document.getElementById("myAudio").onwaiting = function(){
+		setBGI($(".audiojs"),'/ItaxerGS/images/audio/loading.png');
+	};
+
+	document.getElementById("myAudio").onplay = function(){
+		obsTime();
+		$(".audiojs .played").css("display","inline");
+		$(".audiojs .dec").css("display","inline");
+		setBGI($(".audiojs"),'/ItaxerGS/images/audio/pause.png');
+	};
+
+	document.getElementById("myAudio").onplaying = function(){
+		obsTime();
+		$(".audiojs .played").css("display","inline");
+		$(".audiojs .dec").css("display","inline");
+		setBGI($(".audiojs"),'/ItaxerGS/images/audio/pause.png');
+	};
+
+	document.getElementById("myAudio").onpause = function(){
+		setBGI($(".audiojs"),'/ItaxerGS/images/audio/play.png');
+	};
+
+	document.getElementById("myAudio").onended = function(){
+		clearInterval(interval);
+		this.load();
+		setBGI($(".audiojs"),'/ItaxerGS/images/audio/audio.png');
+	};
+
+	function setBGI(obj,url){
+		obj.css({
+			"background-image": "url('"+url+"')",
+			"-webkit-background-image": "url('"+url+"')",
+			"-moz-background-image": "url('"+url+"')",
+			"-ms-background-image": "url('"+url+"')"
+		})
+	}
+
+	function formatTime (num){
+		var min = parseInt(num/60);
+		var sec = num%60;
+		if(min < 10){
+			min = "0" + min;
+		}
+		if(sec < 10){
+			sec = "0" + sec;
+		}
+		return min+":"+sec;
+	}
+	
+	function requestFullScreen(){
+	    document.getElementById('myVideo').play(); // 播放
+	    document.getElementById('myVideo').pause(); // 暂停
+	    console.log('---------------');
+	}
+</script>
+</body>
+</html>

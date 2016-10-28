@@ -1,109 +1,83 @@
 $(document).ready(function(argument) {
-	
-    // var elem=document.body;
-    // var resoult = fullscreen(elem);
-    // console.log("--------"+resoult);
-    checkVideoState();
-    addPlay();
-    
+      addPlay();
+      console.log('--------');
+      playVideoFunc();
+    function playVideoFunc() {
+      $("#videoImg1").click(function(){
+        document.getElementById('myVideo').play(); // 播放
+      });
+    }
 });
+
+
+
+
+function requestFullScreen(){
+    document.getElementById('myVideo').play(); // 播放
+    document.getElementById('myVideo').pause(); // 暂停
+    console.log('---------------');
+}
+
+//document.getElementById('myVideo').webkitRequestFullscreen();
+//// backAudio.get(0).pause();
+/////launchFullScreen(document.documentElement); // the whole page
+    //launchFullScreen(document.getElementById('myVideo')); // any individual element
+    //console.log('--------requestFullScreen');
+    // var myPlayer = document.getElementById('myVideo');
+    // myPlayer.webkitRequestFullscreen();
 
 function addPlay(){
     $("#playButton").click(function(){
+        console.log('--------全屏播放');
+       requestFullScreen();
+       });
+}
+
+
+// function launchFullScreen(element) {  
+//       if (element.requestFullScreen) {
+//         element.requestFullScreen();
+//     } else if (element.mozRequestFullScreen) {
+//         element.mozRequestFullScreen();
+//     } else if (element.webkitRequestFullScreen) {
+//         element.webkitRequestFullScreen();
+//     }
+//     else if (element.msRequestFullscreen) {
+//         element.msRequestFullscreen();
+//     } else if (element.webkitRequestFullscreen) {
+//         element.webkitRequestFullscreen();
+//     } else {
+
+//         alert("no cai en ningun lado");
+//         element.webkitRequestFullscreen();
+//     }
+// }
+
+//function launchFullScreenone(element) {
+    //此方法不可以在異步任務中執行，否則火狐無法全屏
+    // if(element.requestFullscreen) {
+    //     element.requestFullscreen();
+    // } else if(element.mozRequestFullScreen) {
+    //     element.mozRequestFullScreen();
+    // } else if(element.msRequestFullscreen){
+    //     element.msRequestFullscreen();
+    // } else if(element.oRequestFullscreen){
+    //     element.oRequestFullscreen();
+    // }
+    // else if(element.webkitRequestFullscreen)
+    // {
+    //     element.webkitRequestFullScreen();
+    // }else{
         
-        // $('#myVideo').css('height','800px');
-        document.getElementById('myVideo').play(); // 播放
-    });
-    
-    
-}
-
-function checkVideoState() {
-    var video = document.getElementById('myVideo');
-    video.addEventListener("click" , function(){
-       // alert("-------------------");
-       catchPoint();
-    });
-}
-
-//  获取坐标点
-function catchPoint() {
-    $('#myVideo').mousemove(function(){
-        var x=event.offsetX;
-        var y=event.offsetY;
-        console.log("-----X"+x+">>>>>>>pageY:"+y);
-    });
-}
+        // var videobox  = element;
+        // var  cssText = 'width:640px;height:320px;overflow:hidden;';
+        /*
+        -webkit-transform-origin: center bottom;
+transform-origin: center bottom
+         */
+       // videobox.style.cssText = cssText+';'+'-webkit-transform-origin: center top;transform-origin: center top;transform: rotate(90deg);margin:0px;padding:0px;left:0;right:0;';
+        //console.log('-----');
+    // }
+//}
 
 
-// function fullscreen(elem) {
-//     var prefix = 'webkit';
-//     if (elem[prefix + 'EnterFullScreen']) {
-//         return prefix + 'EnterFullScreen';
-//     } else if (elem[prefix + 'RequestFullScreen']) {
-//         return prefix + 'RequestFullScreen';
-//     };
-//     return false;
-// };
-
-
-
-function checkState (){
-	document.addEventListener("fullscreenchange", function(){
-
-	fullscreenState.innerHTML = (document.fullscreen)? "" : "not ";}, false);
-
-	document.addEventListener("mozfullscreenchange", function () {
-
-	fullscreenState.innerHTML = (document.mozFullScreen)? "" : "not ";}, false);
-
-	document.addEventListener("webkitfullscreenchange", function () {
-
-	fullscreenState.innerHTML = (document.webkitIsFullScreen)? "" : "not ";}, false);
-
-	document.addEventListener("msfullscreenchange", function () {
-
-	fullscreenState.innerHTML = (document.msFullscreenElement)? "" : "not ";}, false);
-}
-
-
-
-
-function fullscreenState(){
-	var elem=document.body;  
-    if(elem.webkitRequestFullScreen){  
-        elem.webkitRequestFullScreen();
-        console.log("1");     
-    }else if(elem.mozRequestFullScreen){  
-        elem.mozRequestFullScreen();  
-        console.log("2");
-    }else if(elem.requestFullScreen){  
-        elem.requestFullscreen();  
-        console.log("3");
-    }else{  
-        //浏览器不支持全屏API或已被禁用  
-        console.log("4-------------");
-    } 
-}
-
-
-function  exitFullscreenState(){
-	var elem=document;  
-    if(elem.webkitCancelFullScreen){  
-        elem.webkitCancelFullScreen(); 
-        console.log("1");     
-    }else if(elem.mozCancelFullScreen){  
-        elem.mozCancelFullScreen();  
-        console.log("2");
-    }else if(elem.cancelFullScreen){  
-        elem.cancelFullScreen();  
-        console.log("3");
-    }else if(elem.exitFullscreen){  
-        elem.exitFullscreen();  
-        console.log("4");
-    }else{  
-        //浏览器不支持全屏API或已被禁用  
-        console.log("5==========================");
-    } 
-}
- 
